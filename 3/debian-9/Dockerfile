@@ -30,7 +30,6 @@ ENV ALLOW_ANONYMOUS_LOGIN="no" \
     ZOO_TICK_TIME="2000"
 
 EXPOSE 2181 2888 3888
-RUN mkdir /bitnami/zookeeper
 RUN chown 1001:1001 /bitnami/zookeeper
 USER 1001
 ENTRYPOINT [ "/app-entrypoint.sh" ]

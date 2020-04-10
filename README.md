@@ -200,6 +200,16 @@ The configuration can easily be setup with the Bitnami ZooKeeper Docker image us
  - `ZOO_HEAP_SIZE`: Size in MB for the Java Heap options (Xmx and XMs). This env var is ignored if Xmx an Xms are configured via `JVMFLAGS`. Default: **1024**
  - `ZOO_ENABLE_PROMETHEUS_METRICS`: Expose Prometheus metrics. Default: **no**
  - `ZOO_PROMETHEUS_METRICS_PORT_NUMBER`: Port where a Jetty server will expose Prometheus metrics. Default: **7000**
+ - `ZOO_TLS_CLIENT_ENABLE`: Enable tls for client communication. Default: **false**
+ - `ZOO_TLS_CLIENT_KEYSTORE_PATH`: KeyStore file path: Default: No Defaults
+ - `ZOO_TLS_CLIENT_KEYSTORE_PASSWORD`: KeyStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
+ - `ZOO_TLS_CLIENT_TRUSTSTORE_PATH`: TrustStore file path: Default: No Defaults
+ - `ZOO_TLS_CLIENT_TRUSTSTORE_PASSWORD`: TrustStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
+ - `ZOO_TLS_QUORUM_ENABLE`: Enable tls for quorum communication. Default: **false**
+ - `ZOO_TLS_QUORUM_KEYSTORE_PATH`: KeyStore file path: Default: No Defaults
+ - `ZOO_TLS_QUORUM_KEYSTORE_PASSWORD`: KeyStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
+ - `ZOO_TLS_QUORUM_KEYSTORE_PATH`: TrustStore file path: Default: No Defaults
+ - `ZOO_TLS_QUORUM_KEYSTORE_PASSWORD`: TrustStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
  - `ALLOW_ANONYMOUS_LOGIN`: If set to true, Allow to accept connections from unauthenticated users. Default: **no**
  - `ZOO_LOG_LEVEL`: ZooKeeper log level. Available levels are: `ALL`, `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`, `OFF`, `TRACE`. Default: **INFO**
  - `JVMFLAGS`: Default JVMFLAGS for the ZooKeeper process. No defaults

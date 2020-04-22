@@ -199,6 +199,7 @@ The configuration can easily be setup with the Bitnami ZooKeeper Docker image us
  - `ZOO_ENABLE_PROMETHEUS_METRICS`: Expose Prometheus metrics. Default: **no**
  - `ZOO_PROMETHEUS_METRICS_PORT_NUMBER`: Port where a Jetty server will expose Prometheus metrics. Default: **7000**
  - `ZOO_TLS_CLIENT_ENABLE`: Enable tls for client communication. Default: **false**
+ - `ZOO_TLS_PORT_NUMBER`: ZooKeeper client port if using TLS_CLIENT. Default: **3181**
  - `ZOO_TLS_CLIENT_KEYSTORE_PATH`: KeyStore file path: Default: No Defaults
  - `ZOO_TLS_CLIENT_KEYSTORE_PASSWORD`: KeyStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
  - `ZOO_TLS_CLIENT_TRUSTSTORE_PATH`: TrustStore file path: Default: No Defaults

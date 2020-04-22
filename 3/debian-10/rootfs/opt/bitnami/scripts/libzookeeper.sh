@@ -62,6 +62,7 @@ export ZOO_PROMETHEUS_METRICS_PORT_NUMBER="${ZOO_PROMETHEUS_METRICS_PORT_NUMBER:
 
 # Zookeeper TLS Settings
 export ZOO_TLS_CLIENT_ENABLE="${ZOO_TLS_CLIENT_ENABLE:-false}"
+export ZOO_TLS_PORT_NUMBER="${ZOO_TLS_PORT_NUMBER:-3181}"
 export ZOO_TLS_CLIENT_KEYSTORE_PATH="${ZOO_TLS_CLIENT_KEYSTORE_PATH}"
 export ZOO_TLS_CLIENT_KEYSTORE_PASSWORD=$(eval echo $ZOO_TLS_CLIENT_KEYSTORE_PASSWORD)
 export ZOO_TLS_CLIENT_TRUSTSTORE_PATH="${ZOO_TLS_CLIENT_TRUSTSTORE_PATH}"
@@ -243,7 +244,7 @@ zookeeper_generate_conf() {
 
     if [[ $ZOO_TLS_CLIENT_ENABLE = "true" ]]; then
         zookeeper_conf_set "$ZOO_CONF_FILE" client.secure true
-        zookeeper_conf_set "$ZOO_CONF_FILE" secureClientPort 3181
+        zookeeper_conf_set "$ZOO_CONF_FILE" secureClientPort "ZOO_TLS_PORT_NUMBER"
         zookeeper_conf_set "$ZOO_CONF_FILE" serverCnxnFactory org.apache.zookeeper.server.NettyServerCnxnFactory
         zookeeper_conf_set "$ZOO_CONF_FILE" ssl.keyStore.location "$ZOO_TLS_CLIENT_KEYSTORE_PATH"
         zookeeper_conf_set "$ZOO_CONF_FILE" ssl.keyStore.password "$ZOO_TLS_CLIENT_KEYSTORE_PASSWORD"
@@ -251,6 +252,7 @@ zookeeper_generate_conf() {
         zookeeper_conf_set "$ZOO_CONF_FILE" ssl.trustStore.password "$ZOO_TLS_CLIENT_TRUSTSTORE_PASSWORD"
     fi
     if [[ $ZOO_TLS_QUORUM_ENABLE = "true" ]]; then
+        zookeeper_conf_set "$ZOO_CONF_FILE" serverCnxnFactory org.apache.zookeeper.server.NettyServerCnxnFactory
         zookeeper_conf_set "$ZOO_CONF_FILE" quorum.keyStore.location "$ZOO_TLS_QUORUM_KEYSTORE_PATH"
         zookeeper_conf_set "$ZOO_CONF_FILE" quorum.keyStore.password "$ZOO_TLS_QUORUM_KEYSTORE_PASSWORD"
         zookeeper_conf_set "$ZOO_CONF_FILE" quorum.trustStore.location "$ZOO_TLS_QUORUM_TRUSTSTORE_PATH"

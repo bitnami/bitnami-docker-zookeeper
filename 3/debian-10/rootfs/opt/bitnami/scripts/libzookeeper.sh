@@ -166,10 +166,20 @@ zookeeper_validate() {
 
     # ZooKeeper server list validations
     if [[ -n $ZOO_SERVERS ]]; then
+        idFlag=false
+        if [[ "$ZOO_SERVERS" == *"::"* ]]; then
+            idFlag=true
+        fi
         read -r -a zookeeper_servers_list <<< "${ZOO_SERVERS//[;, ]/ }"
         for server in "${zookeeper_servers_list[@]}"; do
-            if ! echo "$server" | grep -q -E "^[^:]+:[^:]+:[^:]+$"; then
-                print_validation_error "Zookeeper server ${server} should follow the next syntax: host:port:port. Example: zookeeper:2888:3888"
+            if [[ "${idFlag}" == "false" ]]; then
+                if ! echo "$server" | grep -q -E "^[^:]+:[^:]+:[^:]+$"; then
+                    print_validation_error "Zookeeper server ${server} should follow the next syntax: host:port:port. Example: zookeeper:2888:3888"
+                fi
+            else
+                if ! echo "$server" | grep -q -E "^[^:]+:[^:]+:[^:]+::[1-9]+$"; then
+                    print_validation_error "Zookeeper server ${server} should follow the next syntax: host:port:port::id. Example: zookeeper:2888:3888::1"
+                fi
             fi
         done
     fi
@@ -247,14 +257,26 @@ zookeeper_generate_conf() {
     zookeeper_conf_set "${ZOO_CONF_DIR}/log4j.properties" zookeeper.console.threshold "$ZOO_LOG_LEVEL"
 
     # Add zookeeper servers to configuration
+    idFlag=false
+    if [[ "$ZOO_SERVERS" == *"::"* ]]; then
+        idFlag=true
+    fi
     read -r -a zookeeper_servers_list <<< "${ZOO_SERVERS//[;, ]/ }"
     if [[ ${#zookeeper_servers_list[@]} -gt 1 ]]; then
-        local i=1
-        for server in "${zookeeper_servers_list[@]}"; do
-            info "Adding server: ${server}"
-            zookeeper_conf_set "$ZOO_CONF_FILE" server.$i "${server};${ZOO_PORT_NUMBER}"
-            (( i++ ))
-        done
+        if [[ "${idFlag}" == "false" ]]; then
+            local i=1
+            for server in "${zookeeper_servers_list[@]}"; do
+                info "Adding server: ${server}"
+                zookeeper_conf_set "$ZOO_CONF_FILE" server.$i "${server};${ZOO_PORT_NUMBER}"
+                (( i++ ))
+            done
+        else
+            for server in "${zookeeper_servers_list[@]}"; do
+                read -r -a SRV <<< "${server//::/ }"
+                info "Adding server: ${SRV[0]} with id: ${SRV[1]} "
+                zookeeper_conf_set "$ZOO_CONF_FILE" server.${SRV[1]} "${SRV[0]};${ZOO_PORT_NUMBER}"
+            done
+        fi
     else
         info "No additional servers were specified. ZooKeeper will run in standalone mode..."
     fi

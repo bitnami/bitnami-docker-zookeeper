@@ -27,6 +27,7 @@ zookeeper_env() {
 # Format log messages
 export MODULE=zookeeper
 export BITNAMI_DEBUG=${BITNAMI_DEBUG:-false}
+export BITNAMI_TRACE=${BITNAMI_TRACE:-false}
 
 # Paths
 export ZOO_BASE_DIR="/opt/bitnami/zookeeper"

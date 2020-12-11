@@ -5,7 +5,9 @@
 set -o errexit
 set -o nounset
 set -o pipefail
-# set -o xtrace # Uncomment this line for debugging purposes
+if [[ "${BITNAMI_TRACE:-false}" != "false" ]]; then
+    set -o xtrace
+fi
 
 # Load libraries
 . /opt/bitnami/scripts/libzookeeper.sh

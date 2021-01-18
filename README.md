@@ -211,8 +211,8 @@ The configuration can easily be setup with the Bitnami ZooKeeper Docker image us
  - `ZOO_TLS_QUORUM_ENABLE`: Enable tls for quorum communication. Default: **false**
  - `ZOO_TLS_QUORUM_KEYSTORE_FILE`: KeyStore file file: Default: No Defaults
  - `ZOO_TLS_QUORUM_KEYSTORE_PASSWORD`: KeyStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
- - `ZOO_TLS_QUORUM_KEYSTORE_FILE`: TrustStore file file: Default: No Defaults
- - `ZOO_TLS_QUORUM_KEYSTORE_PASSWORD`: TrustStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
+ - `ZOO_TLS_QUORUM_TRUSTSTORE_FILE`: TrustStore file file: Default: No Defaults
+ - `ZOO_TLS_QUORUM_TRUSTSTORE_PASSWORD`: TrustStore file password. This can be an evironment variable. It will be evaled by bash. No Defaults
 
 ```console
 $ docker run --name zookeeper -e ZOO_SERVER_ID=1 bitnami/zookeeper:latest
